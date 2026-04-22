@@ -1,10 +1,5 @@
 -- =============================================================================
 --         BLOOD BANK INVENTORY MANAGEMENT SYSTEM
---         Full DBMS Project in MariaDB / MySQL SQL
---         Version: 2.0 (Fixed - Compatible with all MariaDB versions)
--- =============================================================================
-
--- -----------------------------------------------------------------------------
 -- 0. DATABASE SETUP
 -- -----------------------------------------------------------------------------
 DROP DATABASE IF EXISTS BloodBankDB;
@@ -19,7 +14,7 @@ USE BloodBankDB;
 -- =============================================================================
 
 -- -----------------------------------------------------------------------------
--- 1.1 Blood Types (lookup)
+-- 1.1 Blood Types 
 -- -----------------------------------------------------------------------------
 CREATE TABLE BloodType (
     blood_type_id   TINYINT UNSIGNED  AUTO_INCREMENT PRIMARY KEY,
@@ -31,7 +26,7 @@ CREATE TABLE BloodType (
 );
 
 -- -----------------------------------------------------------------------------
--- 1.2 Blood Banks / Branches
+-- 1.2 Blood Banks 
 -- -----------------------------------------------------------------------------
 CREATE TABLE BloodBank (
     bank_id         INT UNSIGNED  AUTO_INCREMENT PRIMARY KEY,
@@ -123,7 +118,7 @@ CREATE TABLE BloodComponent (
 );
 
 -- -----------------------------------------------------------------------------
--- 1.7 Blood Inventory / Stock Units
+-- 1.7 Blood Inventory
 -- -----------------------------------------------------------------------------
 CREATE TABLE BloodUnit (
     unit_id          INT UNSIGNED      AUTO_INCREMENT PRIMARY KEY,
@@ -375,7 +370,7 @@ DELIMITER ;
 
 DELIMITER $$
 
--- 3.1 Register a new donor
+
 CREATE PROCEDURE sp_register_donor (
     IN p_first_name  VARCHAR(60),
     IN p_last_name   VARCHAR(60),
@@ -421,7 +416,7 @@ BEGIN
            'Donor registered successfully.' AS message;
 END$$
 
--- 3.2 Add a blood unit to inventory
+
 CREATE PROCEDURE sp_add_blood_unit (
     IN p_bank_id         INT UNSIGNED,
     IN p_blood_group     CHAR(3),
@@ -471,7 +466,7 @@ BEGIN
            'Blood unit added. Status: Quarantine (pending tests).' AS message;
 END$$
 
--- 3.3 Release unit after serology testing
+
 CREATE PROCEDURE sp_release_unit_after_testing (
     IN p_unit_id  INT UNSIGNED,
     IN p_hiv      VARCHAR(10),
@@ -505,7 +500,6 @@ BEGIN
         'Unit DISCARDED - reactive serology detected.') AS result;
 END$$
 
--- 3.4 Issue blood to a patient request
 CREATE PROCEDURE sp_issue_blood (
     IN p_request_id  INT UNSIGNED,
     IN p_unit_id     INT UNSIGNED,
@@ -547,7 +541,7 @@ BEGIN
     SELECT 'Blood unit issued successfully.' AS message;
 END$$
 
--- 3.5 Stock summary for a bank
+
 CREATE PROCEDURE sp_stock_summary (IN p_bank_id INT UNSIGNED)
 BEGIN
     UPDATE BloodUnit
@@ -571,7 +565,6 @@ BEGIN
     ORDER BY blood_type, bc.component_name;
 END$$
 
--- 3.6 Check donor eligibility
 CREATE PROCEDURE sp_check_donor_eligibility (IN p_donor_id INT UNSIGNED)
 BEGIN
     SELECT
@@ -592,7 +585,6 @@ BEGIN
     WHERE d.donor_id = p_donor_id;
 END$$
 
--- 3.7 Expiring units alert
 CREATE PROCEDURE sp_expiring_units (IN p_bank_id INT UNSIGNED, IN p_days INT)
 BEGIN
     SELECT
@@ -710,7 +702,7 @@ JOIN   BloodBank bb ON bb.bank_id = dc.bank_id
 ORDER BY dc.camp_date DESC;
 
 -- =============================================================================
--- 5. SEED DATA
+-- 5.DATA
 -- =============================================================================
 
 -- Blood Types
@@ -887,7 +879,3 @@ LIMIT 10;
 
 -- Q12: Audit trail
 SELECT * FROM AuditLog ORDER BY changed_at DESC LIMIT 20;
-
--- =============================================================================
--- END OF SCRIPT
--- =============================================================================
