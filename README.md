@@ -103,8 +103,8 @@ Practical implementation of DBMS concepts
 Understanding of normalization & constraints
 Working with triggers, procedures, and views
 Real-world database design experience
-👩‍💻 Author
 
+👩‍💻 Author
 Anushka Kohli
 BTech IT | DBMS Project
 
