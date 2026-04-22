@@ -3,9 +3,11 @@
 A comprehensive Database Management System project built using MariaDB/MySQL, designed to efficiently manage blood bank operations including donors, inventory, requests, and safety constraints.
 
 🚀 Features
+
 🧑‍⚕️ Donor Management
 Registration, eligibility tracking (90-day rule)
 Donation history & statistics
+
 🩸 Blood Inventory Management
 
 Blood units tracking with expiry dates
